@@ -21,15 +21,13 @@ export class LanguagesContainerAware {
 
     overrideDefinitionProvider(languagesExt: LanguagesExtImpl) {
         const originalRegisterDefinitionProvider = languagesExt.registerDefinitionProvider.bind(languagesExt);
-        const registerDefinitionProvider = (selector: theia.DocumentSelector, provider: theia.DefinitionProvider) => {
-            console.log('>>>>>>>>>>>>>>>>>>>>>>> DEFINITION PROVIDER');
-            return originalRegisterDefinitionProvider(selector, {
+        const registerDefinitionProvider = (selector: theia.DocumentSelector, provider: theia.DefinitionProvider) =>
+            originalRegisterDefinitionProvider(selector, {
                 provideDefinition: async (
                     document: theia.TextDocument,
                     position: theia.Position,
                     token: theia.CancellationToken | undefined
                 ): Promise<theia.Definition | theia.DefinitionLink[]> => {
-                    console.log('>>>>>>>>>>>>>>>>>>> OVERRIDING provideDefinition');
 
                     const result = await provider.provideDefinition(document, position, token);
                     if (Array.isArray(result)) {
@@ -39,11 +37,9 @@ export class LanguagesContainerAware {
                         this.overrideResult(result);
                     }
 
-                    console.log('>>>>>>>>>>>>>>>>>>> RESULT: ', result);
                     return result;
                 }
             });
-        };
 
         languagesExt.registerDefinitionProvider = registerDefinitionProvider;
     }
