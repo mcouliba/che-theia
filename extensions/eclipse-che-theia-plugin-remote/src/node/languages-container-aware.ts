@@ -21,8 +21,9 @@ export class LanguagesContainerAware {
 
     overrideDefinitionProvider(languagesExt: LanguagesExtImpl) {
         const originalRegisterDefinitionProvider = languagesExt.registerDefinitionProvider.bind(languagesExt);
-        const registerDefinitionProvider = (selector: theia.DocumentSelector, provider: theia.DefinitionProvider) =>
-            originalRegisterDefinitionProvider(selector, {
+        const registerDefinitionProvider = (selector: theia.DocumentSelector, provider: theia.DefinitionProvider) => {
+            console.log('>>>>>>>>>>>>>>>>>>>>>>> DEFINITION PROVIDER');
+            return originalRegisterDefinitionProvider(selector, {
                 provideDefinition: async (
                     document: theia.TextDocument,
                     position: theia.Position,
@@ -42,6 +43,7 @@ export class LanguagesContainerAware {
                     return result;
                 }
             });
+        };
 
         languagesExt.registerDefinitionProvider = registerDefinitionProvider;
     }
