@@ -1,0 +1,6 @@
+# Squash configuration file
+# The specification can be found at https://squash.solo.io
+secure_mode: true
+verbose: true
+log_commands: false
+createdby: squash-initialization
